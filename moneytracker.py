@@ -1,8 +1,7 @@
-import sys
-from function import process_file
+#import sys
+#from function import process_file
 
 weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-
 
 #Starting Balance
 try:
@@ -15,9 +14,9 @@ except ValueError:
         print("Error: Must start with positive balance!")
         sys.exit()
     else:
+        day = 0
         while True:
             print("")
-            day = 0
             cmd = input("Enter command: ")
             #TRANSACTION COMMAND
             if cmd == "transaction":
@@ -28,13 +27,13 @@ except ValueError:
                     continue
                     if trans < 0:
                         trans = abs(trans)
-                        start_bal = start_bal - trans
+                        cur_bal = start_bal - trans
                     else:
-                        start_bal = start_bal + trans
+                        cur_bal = start_bal + trans
                 
             # NEXT COMMAND    
             elif cmd == "next":
-                if start_bal < 0:
+                if cur_bal < 0:
                     print("Oh no! You're in debt!")
                     sys.exit()
                 else:
@@ -42,14 +41,45 @@ except ValueError:
                     day += 1
                     
             #STATUS COMMAND
-            elif:
+            elif cmd == "status":
+                if day == 0 or day % 7 == 0:
+                    print("Day",str(day),"("+weekdays[0]+")")
+                elif day == 1 or day % 7 == 1:
+                    print("Day",str(day),"("+weekdays[1]+")")
+                elif day == 2 or day % 7 == 2:
+                    print("Day",str(day),"("+weekdays[2]+")")
+                elif day == 3 or day % 7 == 3:
+                    print("Day",str(day),"("+weekdays[3]+")")
+                elif day == 4 or day % 7 == 4:
+                    print("Day",str(day),"("+weekdays[4]+")")
+                elif day == 5 or day % 7 == 5:
+                    print("Day",str(day),"("+weekdays[5]+")")
+                elif day == 6 or day % 7 == 6:
+                    print("Day",str(day),"("+weekdays[6]+")")
+                
+                print("Starting balance: ${:.2f}".format(cur_bal))
+                print("Current balance: ${:.2f}".format(start_bal))
+                
+                if start_bal < cur_bal:
+                    print("Nice work! You're in the black.")
+                elif start_bal > cur_bal:
+                    print("Be careful! You're in the red.")
+                else:
+                    pass
                 
             #REGULAR COMMAND
-            elif:
+            elif cmd == "regular":
             
             #HELP COMMAND
-            elif:
-            
+            elif cmd == "help":
+                print("The available commands are:")
+                print('"transaction": Record a new income or expense')
+                print('"next": Move on to the next day')
+                print('"status": Show a summary of how you\'re doing today')
+                print('"regular": Show a summary of your regular transactions')
+                print('"help": Show this help message')
+                print('"quit": Quit the program')
+                
             #QUIT COMMAND
             elif cmd == 'quit':
                 print("Bye!")
